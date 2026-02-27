@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import { Helmet } from 'react-helmet-async';
-import { MapPin, Phone, Mail, Shield, Award, Leaf } from 'lucide-react';
-
+import { MapPin, Phone, Mail, Shield, Award, Leaf, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+import { useState } from 'react';
 
 export function Contatti() {
   const f = window.wpData?.fields ?? {};
@@ -38,6 +38,45 @@ export function Contatti() {
   const companyRea       = f.company_rea            ?? 'NA - 1141646';
   const companyCapital   = f.company_capital        ?? '';
   const companyPec       = f.company_pec            ?? 'tecnora@pec.it';
+
+  // ── Gestione Invio Form CF7 ────────────────────────────────────────────────
+  const cf7Id = '31'; // L'ID numerico del post di Contact Form 7
+  const [formStatus, setFormStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setFormStatus('loading');
+    setErrorMessage('');
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    // CF7 richiede obbligatoriamente questo campo per validare il form
+    formData.append('_wpcf7_unit_tag', `wpcf7-f${cf7Id}-p1-o1`);
+
+    try {
+      const response = await fetch(`/wp-json/contact-form-7/v1/contact-forms/${cf7Id}/feedback`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      const result = await response.json();
+      console.log('RISPOSTA DA CF7:', result);
+
+      if (result.status === 'mail_sent') {
+        setFormStatus('success');
+        form.reset();
+      } else {
+        setFormStatus('error');
+        setErrorMessage(result.message || 'Si è verificato un errore durante l\'invio del messaggio.');
+      }
+    } catch (err) {
+      console.error('Errore invio form:', err);
+      setFormStatus('error');
+      setErrorMessage('Errore di connessione al server. Riprova più tardi.');
+    }
+  };
 
   return (
     <div className="w-full">
@@ -108,16 +147,36 @@ export function Contatti() {
             className="max-w-3xl mx-auto bg-gray-50 rounded-xl p-8 shadow-lg"
           >
             <h2 className="text-2xl font-bold text-primary mb-6 text-center">{formTitle}</h2>
-            <form className="space-y-6" aria-label="Modulo di contatto">
+            
+            {formStatus === 'success' ? (
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="bg-green-50 border border-green-200 rounded-lg p-8 text-center"
+              >
+                <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
+                <h3 className="text-2xl font-bold text-green-700 mb-2">Messaggio Inviato!</h3>
+                <p className="text-green-600">
+                  Grazie per averci contattato. Ti risponderemo il prima possibile all'indirizzo email indicato.
+                </p>
+                <button 
+                  onClick={() => setFormStatus('idle')}
+                  className="mt-6 px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                >
+                  Invia un altro messaggio
+                </button>
+              </motion.div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-6" aria-label="Modulo di contatto">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="user_name" className="block text-sm font-medium text-gray-700 mb-2">
                     Nome e Cognome *
                   </label>
                   <input
                     type="text"
-                    id="name"
-                    name="name"
+                    id="user_name"
+                    name="user_name"
                     required
                     aria-required="true"
                     className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent"
@@ -192,20 +251,38 @@ export function Contatti() {
                   aria-required="true"
                   className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
                   placeholder="Descrivi il tuo progetto o la tua richiesta..."
+                  disabled={formStatus === 'loading'}
                 />
               </div>
 
+              {/* Messaggio Errore */}
+              {formStatus === 'error' && (
+                <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded flex items-start">
+                  <AlertCircle className="w-5 h-5 text-red-500 mr-3 mt-0.5" />
+                  <p className="text-red-700 text-sm">{errorMessage}</p>
+                </div>
+              )}
+
               <button
                 type="submit"
-                className="w-full px-8 py-4 bg-accent text-white rounded-lg hover:bg-accent/90 transition-all transform hover:scale-105 font-medium"
+                disabled={formStatus === 'loading'}
+                className="w-full px-8 py-4 bg-accent text-white rounded-lg hover:bg-accent/90 transition-all transform hover:scale-105 font-medium flex justify-center items-center disabled:opacity-70 disabled:hover:scale-100 disabled:cursor-not-allowed"
               >
-                Invia Richiesta
+                {formStatus === 'loading' ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin mr-2" />
+                    Invio in corso...
+                  </>
+                ) : (
+                  'Invia Richiesta'
+                )}
               </button>
 
               <p className="text-sm text-gray-500 text-center">
-                * Campi obbligatori. I tuoi dati saranno trattati nel rispetto del GDPR.
+                * Campi obbligatori. Cliccando su "Invia" acconsenti al trattamento dei dati personali secondo il GDPR e la nostra Privacy Policy pubblicata sul sito.
               </p>
             </form>
+            )}
           </motion.div>
         </div>
       </section>

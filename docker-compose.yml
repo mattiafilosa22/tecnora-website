@@ -47,7 +47,7 @@ services:
 
   # ── WordPress ───────────────────────────────────────────────────────────────
   wordpress:
-    image: wordpress:6.5-apache
+    image: wordpress:6.9.1-apache
     container_name: tecnora_wp
     restart: unless-stopped
     depends_on:

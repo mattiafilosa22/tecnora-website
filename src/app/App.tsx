@@ -9,6 +9,7 @@ import { Sicurezza } from './pages/Sicurezza';
 import { Ambiente } from './pages/Ambiente';
 import { Innovazione } from './pages/Innovazione';
 import { Contatti } from './pages/Contatti';
+import { GenericPage } from './pages/GenericPage';
 
 // Leggi il basePath da WordPress (es. "/" o "/tecnora/") per sottocartelle WP
 const basePath = window.wpData?.basePath ?? '/';
@@ -30,10 +31,8 @@ export default function App() {
           <Route path="/ambiente" element={<Ambiente />} />
           <Route path="/innovazione" element={<Innovazione />} />
           <Route path="/contatti" element={<Contatti />} />
-          {/* Reindirizza il route WP corrente se diverso dal path attuale */}
-          {initialRoute && initialRoute !== '/' && (
-            <Route path="*" element={<Navigate to={initialRoute} replace />} />
-          )}
+          {/* Pagine Generiche Generate da WordPress (Privacy Policy, Cookie, ecc.) */}
+          <Route path="*" element={<GenericPage />} />
         </Routes>
       </Layout>
     </BrowserRouter>

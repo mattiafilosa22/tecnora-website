@@ -89,10 +89,14 @@ function tecnora_localize_wp_data(): void {
 
     $current_route = $route_map[ $page_slug ] ?? '/' . ltrim( $page_slug, '/' );
 
+    // Applica i filtri a the_content in modo che React possa renderizzare il contenuto coi plugin (es. Complianz)
+    $content = $page ? apply_filters( 'the_content', $page->post_content ) : '';
+
     // ── Payload finale ────────────────────────────────────────────────────────
     $wp_data = [
         'pageSlug'     => esc_attr( $page_slug ),
         'pageTitle'    => esc_html( get_the_title( $page_id ) ),
+        'content'      => $content,
         'currentRoute' => esc_attr( $current_route ),
         'homeUrl'      => esc_url( $home_url ),
         'siteUrl'      => esc_url( $site_url ),
