@@ -1,0 +1,100 @@
+name: 🚀 Build & Deploy su Aruba via FTP
+
+# ─── Trigger ─────────────────────────────────────────────────────────────────
+# Eseguito automaticamente ad ogni push su main, oppure manualmente.
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      force_deploy:
+        description: 'Forza il deploy anche senza modifiche'
+        required: false
+        default: 'false'
+        type: boolean
+
+# ─── Permessi minimi ─────────────────────────────────────────────────────────
+permissions:
+  contents: read
+
+# ─── Jobs ────────────────────────────────────────────────────────────────────
+jobs:
+  build-and-deploy:
+    name: Build Vite + Deploy FTP
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      # ── 1. Checkout del codice ──────────────────────────────────────────
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      # ── 2. Setup Node.js ────────────────────────────────────────────────
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      # ── 3. Installa dipendenze ──────────────────────────────────────────
+      - name: 📦 Install dependencies
+        run: npm ci --prefer-offline
+
+      # ── 4. Build Vite → wp-theme/dist/ ─────────────────────────────────
+      - name: 🔨 Build React/Vite
+        run: npm run build
+        env:
+          NODE_ENV: production
+
+      # ── 5. Verifica che il build sia andato a buon fine ─────────────────
+      - name: ✅ Verify build output
+        run: |
+          if [ ! -f "wp-theme/dist/.vite/manifest.json" ]; then
+            echo "❌ ERRORE: manifest.json non trovato! Il build è fallito."
+            exit 1
+          fi
+          echo "✅ Build completato con successo"
+          echo "📁 Contenuto wp-theme/dist/:"
+          ls -la wp-theme/dist/ || true
+          ls -la wp-theme/dist/.vite/ || true
+
+      # ── 6. Deploy FTP su Aruba ──────────────────────────────────────────
+      # IMPORTANTE: Aggiungi questi segreti nelle impostazioni del repository:
+      #   Settings → Secrets and variables → Actions → New repository secret
+      #   • FTP_SERVER   → hostname FTP Aruba (es. ftp.tecnora.it)
+      #   • FTP_USERNAME → username FTP Aruba
+      #   • FTP_PASSWORD → password FTP Aruba
+      #   • FTP_PATH     → percorso remoto (es. /public_html/wp-content/themes/tecnora/)
+      - name: 📤 Deploy tema su Aruba via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server:   ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          # Cartella locale da deployare (il tema WP completo)
+          local-dir: ./wp-theme/
+          # Cartella remota su Aruba
+          server-dir: ${{ secrets.FTP_PATH }}
+          # ── File/cartelle da escludere dal deploy ──
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/.DS_Store
+            **/*.map
+          # Opzioni avanzate
+          dangerous-clean-slate: false
+          log-level: standard
+
+      # ── 7. Notifica build completato ─────────────────────────────────────
+      - name: 🎉 Deploy completato
+        if: success()
+        run: |
+          echo "✅ Deploy su Aruba completato con successo!"
+          echo "🌐 Il sito è disponibile su https://tecnora.it"
+
+      # ── 8. Notifica errore ───────────────────────────────────────────────
+      - name: ❌ Deploy fallito  
+        if: failure()
+        run: echo "❌ Deploy fallito! Controlla i log sopra per i dettagli."

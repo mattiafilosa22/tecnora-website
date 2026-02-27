@@ -1,0 +1,108 @@
+version: '3.9'
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Tecnora – Ambiente LAMP Locale
+#
+# Servizi:
+#   • db        – MySQL 8.0
+#   • wordpress – WordPress con tema Tecnora montato via volume
+#   • phpmyadmin– Interfaccia DB (http://localhost:8081)
+#
+# Utilizzo:
+#   docker compose up -d            # Avvia tutti i servizi
+#   docker compose down             # Ferma e rimuove i container
+#   docker compose down -v          # Ferma e rimuove anche i volumi (ATTENZIONE: cancella il DB)
+#
+# Prima di avviare:
+#   1. Copia il file .env.example in .env e compila le variabili
+#   2. Esegui: npm run build   (per generare wp-theme/dist/)
+#   3. Accedi a http://localhost:8080 per installare WordPress
+#   4. Attiva il tema "Tecnora" da Aspetto → Temi
+#   5. Installa il plugin "Advanced Custom Fields" (versione Free)
+# ─────────────────────────────────────────────────────────────────────────────
+
+services:
+
+  # ── MySQL Database ──────────────────────────────────────────────────────────
+  db:
+    image: mysql:8.0
+    container_name: tecnora_db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-tecnora_root_secret}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-tecnora_wp}
+      MYSQL_USER: ${MYSQL_USER:-tecnora}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-tecnora_secret}
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - tecnora_net
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-tecnora_root_secret}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── WordPress ───────────────────────────────────────────────────────────────
+  wordpress:
+    image: wordpress:6.5-apache
+    container_name: tecnora_wp
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: ${MYSQL_USER:-tecnora}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD:-tecnora_secret}
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE:-tecnora_wp}
+      # ── Configurazione debug WordPress ──
+      WORDPRESS_DEBUG: ${WP_DEBUG:-1}
+      WORDPRESS_DEBUG_LOG: ${WP_DEBUG_LOG:-1}
+      WORDPRESS_DEBUG_DISPLAY: ${WP_DEBUG_DISPLAY:-0}
+      # ── Config opzionale ──
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_HOME',    '${WP_HOME:-http://localhost:8080}');
+        define('WP_SITEURL', '${WP_SITEURL:-http://localhost:8080}');
+        define('WP_MEMORY_LIMIT', '256M');
+    volumes:
+      # Mount del tema Tecnora nella directory dei temi WordPress
+      - ./wp-theme:/var/www/html/wp-content/themes/tecnora:cached
+      # Volume persistente per caricamenti media WordPress
+      - wp_uploads:/var/www/html/wp-content/uploads
+    ports:
+      - "8080:80"
+    networks:
+      - tecnora_net
+
+  # ── phpMyAdmin ──────────────────────────────────────────────────────────────
+  phpmyadmin:
+    image: phpmyadmin:5.2
+    container_name: tecnora_phpmyadmin
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: ${MYSQL_ROOT_PASSWORD:-tecnora_root_secret}
+      UPLOAD_LIMIT: 64M
+    ports:
+      - "8081:80"
+    networks:
+      - tecnora_net
+
+# ─── Volumi ───────────────────────────────────────────────────────────────────
+volumes:
+  db_data:
+    driver: local
+  wp_uploads:
+    driver: local
+
+# ─── Network ──────────────────────────────────────────────────────────────────
+networks:
+  tecnora_net:
+    driver: bridge

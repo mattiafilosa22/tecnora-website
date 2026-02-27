@@ -1,0 +1,77 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Tecnora – .htaccess per Aruba Basic Linux
+#
+# IMPORTANTE: Questo file va NELLA ROOT del dominio (es. public_html/),
+# NON dentro la cartella del tema WP.
+# WordPress ha già il suo blocco RewriteRule; qui aggiungiamo il fallback
+# per la React SPA (tutti i path non-asset → index.php di WordPress).
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ── Sicurezza base ────────────────────────────────────────────────────────────
+Options -Indexes
+ServerSignature Off
+
+# Proteggi file sensibili
+<FilesMatch "^(wp-config\.php|readme\.html|license\.txt|xmlrpc\.php)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# ── Compressione GZIP (performance) ──────────────────────────────────────────
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml
+    AddOutputFilterByType DEFLATE text/css application/javascript application/json
+    AddOutputFilterByType DEFLATE application/x-font-ttf font/opentype image/svg+xml
+</IfModule>
+
+# ── Browser Caching (performance) ────────────────────────────────────────────
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css                  "access plus 1 year"
+    ExpiresByType application/javascript    "access plus 1 year"
+    ExpiresByType image/png                  "access plus 6 months"
+    ExpiresByType image/jpeg                 "access plus 6 months"
+    ExpiresByType image/webp                 "access plus 6 months"
+    ExpiresByType image/svg+xml              "access plus 1 month"
+    ExpiresByType font/woff2                 "access plus 1 year"
+    ExpiresByType application/font-woff2     "access plus 1 year"
+</IfModule>
+
+# ── SPA Routing – Fallback su WordPress index.php ─────────────────────────────
+# Permette a React Router di gestire i percorsi client-side.
+# L'ordine di priorità: file fisici > directory fisiche > WP index.php
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Forza HTTPS (decommentare in produzione su Aruba)
+    # RewriteCond %{HTTPS} off
+    # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Redirect www → non-www (o viceversa, decommentare quello necessario)
+    # RewriteCond %{HTTP_HOST} ^www\.tecnora\.it [NC]
+    # RewriteRule ^(.*)$ https://tecnora.it/$1 [L,R=301]
+
+    # ── Blocco Standard WordPress ──────────────────────────────────────────
+    RewriteBase /
+    RewriteRule ^index\.php$ - [L]
+
+    # Non riscrivere file e directory esistenti (asset Vite, upload WP, ecc.)
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # Tutto il resto → WordPress (che poi carica la React SPA)
+    RewriteRule . /index.php [L]
+</IfModule>
+
+# ── Header di sicurezza ───────────────────────────────────────────────────────
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+    # Cache immutabile per gli asset versionati da Vite (hash nel filename)
+    <FilesMatch "\.(js|css|woff2|png|jpg|webp)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+</IfModule>
