@@ -58,6 +58,10 @@
     <!-- ─── Open Graph / Social ──────────────────────────────────────────── -->
     <meta property="og:type"        content="website">
     <meta property="og:url"         content="<?php echo $canonical_url; ?>">
+
+    <!-- ─── Favicon (Statica via Tema) ───────────────────────────────────── -->
+    <link rel="icon" type="image/png" href="<?php echo esc_url( get_template_directory_uri() . '/dist/favicon.png' ); ?>">
+    <link rel="apple-touch-icon" href="<?php echo esc_url( get_template_directory_uri() . '/dist/favicon.png' ); ?>">
     <meta property="og:title"       content="<?php echo esc_attr( $meta_title ); ?>">
     <meta property="og:description" content="<?php echo esc_attr( $meta_desc ); ?>">
     <meta property="og:image"       content="<?php echo $og_image_url; ?>">
