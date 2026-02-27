@@ -14,9 +14,9 @@ export function Contatti() {
   ];
 
   // ── Info contatto da ACF ───────────────────────────────────────────────────
-  const address = f.contact_address ?? 'Via Francesco Caracciolo n. 10, 80122 Napoli';
-  const phone   = f.contact_phone   ?? '+39 081 XXX XXXX';
-  const email   = f.contact_email   ?? 'info@tecnora.it';
+  const address = f.contact_address ?? 'Via Francesco Caracciolo n. 10 - 80122 Napoli';
+  const phone   = f.contact_phone   ?? '';
+  const email   = f.contact_email   ?? 'contact@tecnora.it';
   const piva    = f.contact_piva    ?? '10920591210';
 
   const contactInfo = [
@@ -33,10 +33,11 @@ export function Contatti() {
   const certTitle        = f.cert_section_title     ?? 'Certificazioni & Sicurezza';
   const certSubtitle     = f.cert_section_subtitle  ?? 'Compliance normativa e sistemi di gestione certificati';
   const formTitle        = f.form_section_title     ?? 'Scrivici Direttamente';
-  const companyName      = f.company_name           ?? 'TECNORA S.R.L.';
+  const companyName      = f.company_name           ?? 'Tecnora S.r.l.';
   const companyReg       = f.company_reg            ?? 'Camera di Commercio di Napoli';
-  const companyRea       = f.company_rea            ?? 'NA-XXXXXXX';
-  const companyCapital   = f.company_capital        ?? '€ 10.000,00 i.v.';
+  const companyRea       = f.company_rea            ?? 'NA - 1141646';
+  const companyCapital   = f.company_capital        ?? '';
+  const companyPec       = f.company_pec            ?? 'tecnora@pec.it';
 
   return (
     <div className="w-full">
@@ -291,32 +292,42 @@ export function Contatti() {
               Dati Societari
             </h2>
             <div className="bg-gray-50 rounded-xl p-8">
-              <div className="space-y-4 text-left">
-                <div className="flex justify-between items-center border-b border-gray-200 pb-3">
-                  <span className="font-medium text-gray-700">Ragione Sociale:</span>
-                  <span className="text-primary font-semibold">{companyName}</span>
+                <div className="space-y-4 text-left">
+                  <div className="flex justify-between items-center border-b border-gray-200 pb-3">
+                    <span className="font-medium text-gray-700">Ragione Sociale:</span>
+                    <span className="text-primary font-semibold">{companyName}</span>
+                  </div>
+                  <div className="flex justify-between items-center border-b border-gray-200 pb-3">
+                    <span className="font-medium text-gray-700">Sede Legale:</span>
+                    <span className="text-gray-900">{address}</span>
+                  </div>
+                  <div className="flex justify-between items-center border-b border-gray-200 pb-3">
+                    <span className="font-medium text-gray-700">Registro Imprese:</span>
+                    <span className="text-gray-900">{companyReg}</span>
+                  </div>
+                  <div className="flex justify-between items-center border-b border-gray-200 pb-3">
+                    <span className="font-medium text-gray-700">REA:</span>
+                    <span className="text-gray-900 font-mono">{companyRea}</span>
+                  </div>
+                  <div className="flex justify-between items-center border-b border-gray-200 pb-3">
+                    <span className="font-medium text-gray-700">Codice Fiscale / P.IVA:</span>
+                    <span className="text-gray-900 font-mono">{piva}</span>
+                  </div>
+                  <div className="flex justify-between items-center border-b border-gray-200 pb-3">
+                    <span className="font-medium text-gray-700">Email:</span>
+                    <a href={`mailto:${email}`} className="text-accent hover:underline">{email}</a>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="font-medium text-gray-700">PEC:</span>
+                    <a href={`mailto:${companyPec}`} className="text-accent hover:underline">{companyPec}</a>
+                  </div>
+                  {companyCapital && (
+                    <div className="flex justify-between items-center border-t border-gray-200 pt-3">
+                      <span className="font-medium text-gray-700">Capitale Sociale:</span>
+                      <span className="text-gray-900">{companyCapital}</span>
+                    </div>
+                  )}
                 </div>
-                <div className="flex justify-between items-center border-b border-gray-200 pb-3">
-                  <span className="font-medium text-gray-700">Sede Legale:</span>
-                  <span className="text-gray-900">{address}</span>
-                </div>
-                <div className="flex justify-between items-center border-b border-gray-200 pb-3">
-                  <span className="font-medium text-gray-700">Registro Imprese:</span>
-                  <span className="text-gray-900">{companyReg}</span>
-                </div>
-                <div className="flex justify-between items-center border-b border-gray-200 pb-3">
-                  <span className="font-medium text-gray-700">REA:</span>
-                  <span className="text-gray-900 font-mono">{companyRea}</span>
-                </div>
-                <div className="flex justify-between items-center border-b border-gray-200 pb-3">
-                  <span className="font-medium text-gray-700">Codice Fiscale / P.IVA:</span>
-                  <span className="text-gray-900 font-mono">{piva}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="font-medium text-gray-700">Capitale Sociale:</span>
-                  <span className="text-gray-900">{companyCapital}</span>
-                </div>
-              </div>
             </div>
           </motion.div>
         </div>

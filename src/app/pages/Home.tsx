@@ -1,89 +1,86 @@
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { Building2, Wrench, Lightbulb, Shield, Target, Users } from 'lucide-react';
+import { Building2, Wrench, Lightbulb, HardHat, Leaf, FileText } from 'lucide-react';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 
 
 export function Home() {
   const f = window.wpData?.fields ?? {};
 
-  // ── Macro-Aree: testi da ACF, icone/percorsi/colori fissi ─────────────────
+  // ── Macro-Aree: 6 servizi ─────────────────────────────────────────────────
   const macroAreas = [
     {
+      icon: FileText,
+      title: f.macro1_title ?? 'Supporto alle Gare d\'Appalto',
+      description: f.macro1_desc ?? 'Affiancamento nella partecipazione a procedure di gara pubbliche, dall\'analisi dei documenti alla redazione dell\'offerta tecnica.',
+      path: '/gare-appalto',
+      color: 'bg-accent',
+    },
+    {
       icon: Building2,
-      title: f.macro1_title ?? 'Opere e Lavori Pubblici',
-      description: f.macro1_desc ?? 'Progettazione integrata e direzione lavori per infrastrutture e edilizia pubblica',
+      title: f.macro2_title ?? 'Opere Pubbliche',
+      description: f.macro2_desc ?? 'Consulenza e supporto tecnico per la realizzazione di infrastrutture, edilizia pubblica e interventi sul territorio.',
       path: '/opere-pubbliche',
       color: 'bg-primary',
     },
     {
       icon: Wrench,
-      title: f.macro2_title ?? 'Facility Management',
-      description: f.macro2_desc ?? 'Gestione asset, manutenzione programmata e supporto appalti pubblici',
+      title: f.macro3_title ?? 'Facility Management',
+      description: f.macro3_desc ?? 'Supporto tecnico per la gestione e manutenzione di edifici, impianti e infrastrutture in appalti pubblici.',
       path: '/facility-management',
       color: 'bg-secondary',
     },
     {
+      icon: HardHat,
+      title: f.macro4_title ?? 'Sicurezza sul Lavoro',
+      description: f.macro4_desc ?? 'Supporto specialistico per la sicurezza nei cantieri temporanei e mobili e nei luoghi di lavoro.',
+      path: '/sicurezza',
+      color: 'bg-orange-600',
+    },
+    {
+      icon: Leaf,
+      title: f.macro5_title ?? 'Ambiente e Sostenibilità',
+      description: f.macro5_desc ?? 'Gestione degli aspetti ambientali negli appalti pubblici e rispetto dei criteri ambientali minimi (CAM).',
+      path: '/ambiente',
+      color: 'bg-green-600',
+    },
+    {
       icon: Lightbulb,
-      title: f.macro3_title ?? 'Innovazione Digitale',
-      description: f.macro3_desc ?? 'BIM, GIS e Data Analytics per decisioni basate sui dati',
+      title: f.macro6_title ?? 'Innovazione',
+      description: f.macro6_desc ?? 'Digitalizzazione dei processi, ottimizzazione documentale e approcci innovativi alla gestione degli appalti.',
       path: '/innovazione',
-      color: 'bg-accent',
+      color: 'bg-purple-600',
     },
   ];
 
-  // ── Valori Pubblico: testi da ACF, icone fisse ────────────────────────────
-  const values = [
-    {
-      icon: Target,
-      title: f.val1_title ?? 'Competenza Tecnica',
-      description: f.val1_desc ?? 'Know-how ingegneristico e conoscenza normativa degli appalti pubblici',
-    },
-    {
-      icon: Shield,
-      title: f.val2_title ?? 'Trasparenza',
-      description: f.val2_desc ?? 'Processi tracciabili e reporting in tempo reale per la PA',
-    },
-    {
-      icon: Users,
-      title: f.val3_title ?? 'Team Multidisciplinare',
-      description: f.val3_desc ?? 'Ingegneri, architetti e specialisti con competenze trasversali',
-    },
-  ];
+  // ── Campi ACF con fallback ────────────────────────────────────────────────
+  const heroTitle         = f.hero_title        ?? 'Ingegneria.\nIntegrità.\nInnovazione.';
+  const heroSubtitle      = f.hero_subtitle     ?? 'Il partner tecnico delle imprese nei rapporti con la Pubblica Amministrazione.';
+  const heroBgImage       = f.hero_bg_image     ?? null;
+  const heroCtaPrimary    = f.hero_cta_primary_label   ?? 'Scopri i servizi';
+  const heroCtaSecondary  = f.hero_cta_secondary_label ?? 'Contattaci';
 
-  // ── Titoli sezione da ACF ─────────────────────────────────────────────────
-  const areasSectionTitle    = f.areas_section_title    ?? 'Le Nostre Aree di Competenza';
-  const areasSectionSubtitle = f.areas_section_subtitle ?? 'Soluzioni integrate per ogni fase del ciclo di vita dei progetti pubblici';
-  const valuesSectionTitle   = f.values_section_title   ?? 'Il Nostro Valore Pubblico';
-  const valuesSectionSubtitle= f.values_section_subtitle?? 'Responsabilità, qualità e sicurezza nelle scelte progettuali';
+  const missionTitle      = f.mission_title     ?? 'Cosa Facciamo';
+  const missionText       = f.mission_text      ?? null;
 
-  const wpFields = f; // alias per compatibilità con hero/mission/cta
+  const areasSectionTitle    = f.areas_section_title    ?? 'I Nostri Servizi';
+  const areasSectionSubtitle = f.areas_section_subtitle ?? 'Supporto tecnico-specialistico per le imprese negli appalti pubblici';
 
-  // ── Campi ACF con fallback statici ────────────────────────────────────────
-  const heroTitle        = wpFields?.hero_title        ?? 'Ingegneria.\nIntegrità.\nInnovazione.';
-  const heroSubtitle     = wpFields?.hero_subtitle     ?? "Soluzioni tecniche d'eccellenza per la Pubblica Amministrazione";
-  const heroBgImage      = wpFields?.hero_bg_image     ?? null;
-  const heroCtaPrimary   = wpFields?.hero_cta_primary_label   ?? 'Scopri di più';
-  const heroCtaSecondary = wpFields?.hero_cta_secondary_label ?? 'Contattaci';
-  const missionTitle     = wpFields?.mission_title     ?? 'La Nostra Missione';
-  const missionText      = wpFields?.mission_text      ?? null; // wysiwyg HTML
-  const ctaTitle         = wpFields?.cta_title         ?? 'Pronti per il Prossimo Progetto?';
-  const ctaText          = wpFields?.cta_text          ?? 'Trasformiamo le sfide della Pubblica Amministrazione in opportunità di eccellenza';
-  const ctaBtnLabel      = wpFields?.cta_button_label  ?? 'Richiedi una Consulenza';
+  const ctaTitle         = f.cta_title         ?? 'Vuoi partecipare a una gara d\'appalto?';
+  const ctaText          = f.cta_text          ?? 'Contattaci per una consulenza preliminare: analizzeremo le tue esigenze e individueremo la soluzione più adatta.';
+  const ctaBtnLabel      = f.cta_button_label  ?? 'Richiedi una Consulenza';
 
-  // Converte il titolo hero (con \n) in righe separate
   const heroLines = heroTitle.split('\n').filter(Boolean);
 
   return (
     <div className="w-full">
       <Helmet>
-        <title>{wpFields?.seo_title ?? 'TECNORA – Ingegneria per la Pubblica Amministrazione'}</title>
-        <meta name="description" content={wpFields?.seo_description ?? 'TECNORA S.R.L. offre soluzioni di ingegneria per opere pubbliche, facility management e innovazione digitale.'} />
+        <title>{f.seo_title ?? 'TECNORA – Partner tecnico per gli appalti pubblici'}</title>
+        <meta name="description" content={f.seo_description ?? 'Tecnora affianca le imprese nella partecipazione alle gare d\'appalto pubbliche, offrendo supporto tecnico-specialistico in tutte le fasi del procedimento.'} />
       </Helmet>
 
       {/* Hero Section */}
-
       <section className="relative h-[80vh] min-h-[600px] flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary via-primary/95 to-primary/90">
         <div className="absolute inset-0 opacity-20">
           <ImageWithFallback
@@ -109,7 +106,7 @@ export function Home() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                to="/chi-siamo"
+                to="/gare-appalto"
                 className="px-8 py-4 bg-accent text-white rounded-lg hover:bg-accent/90 transition-all transform hover:scale-105"
               >
                 {heroCtaPrimary}
@@ -136,7 +133,7 @@ export function Home() {
         </motion.div>
       </section>
 
-      {/* Mission Section */}
+      {/* Cosa Facciamo */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4 lg:px-8">
           <motion.div
@@ -150,25 +147,27 @@ export function Home() {
               {missionTitle}
             </h2>
             {missionText ? (
-              // Il testo arriva già sanificato da wp_kses_post() lato PHP
               <div
                 className="text-lg text-gray-700 leading-relaxed"
                 dangerouslySetInnerHTML={{ __html: missionText }}
               />
             ) : (
-              <p className="text-lg text-gray-700 leading-relaxed">
-                TECNORA si impegna a generare <strong>valore tecnico e sociale</strong> attraverso
-                progetti di ingegneria per gli appalti pubblici. Uniamo competenze ingegneristiche
-                avanzate con una profonda conoscenza dei contratti pubblici, trasformando
-                la complessità amministrativa in <strong>soluzioni operative tracciabili</strong>
-                e orientate alla qualità, sicurezza e sostenibilità.
-              </p>
+              <>
+                <p className="text-lg text-gray-700 leading-relaxed mb-4">
+                  Tecnora affianca le imprese nella partecipazione alle gare d'appalto pubbliche,
+                  offrendo <strong>supporto tecnico-specialistico</strong> in tutte le fasi del procedimento.
+                </p>
+                <p className="text-lg text-gray-700 leading-relaxed">
+                  Operiamo con rigore ingegneristico, competenza normativa e una profonda
+                  conoscenza dei processi della Pubblica Amministrazione.
+                </p>
+              </>
             )}
           </motion.div>
         </div>
       </section>
 
-      {/* Macro-Aree (Bento Grid) */}
+      {/* Servizi (6 card) */}
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="text-center mb-12">
@@ -187,15 +186,12 @@ export function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
+                transition={{ duration: 0.6, delay: index * 0.08 }}
               >
-                <Link
-                  to={area.path}
-                  className="group block h-full"
-                >
+                <Link to={area.path} className="group block h-full">
                   <div className="h-full bg-white rounded-xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-200">
                     <div className={`w-16 h-16 ${area.color} rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
-                      <area.icon className="w-8 h-8 text-white" />
+                      <area.icon className="w-8 h-8 text-white" aria-hidden="true" />
                     </div>
                     <h3 className="text-2xl font-bold text-primary mb-3">
                       {area.title}
@@ -205,49 +201,12 @@ export function Home() {
                     </p>
                     <div className="text-accent font-semibold flex items-center">
                       Scopri di più
-                      <svg className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                       </svg>
                     </div>
                   </div>
                 </Link>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Il Nostro Valore Pubblico */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
-              {valuesSectionTitle}
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              {valuesSectionSubtitle}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {values.map((value, index) => (
-              <motion.div
-                key={value.title}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="text-center"
-              >
-                <div className="w-20 h-20 mx-auto mb-6 bg-secondary/20 rounded-full flex items-center justify-center">
-                  <value.icon className="w-10 h-10 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold text-primary mb-3">
-                  {value.title}
-                </h3>
-                <p className="text-gray-600 leading-relaxed">
-                  {value.description}
-                </p>
               </motion.div>
             ))}
           </div>

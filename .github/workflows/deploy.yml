@@ -59,13 +59,6 @@ jobs:
           ls -la wp-theme/dist/ || true
           ls -la wp-theme/dist/.vite/ || true
 
-      # ── 6. Deploy FTP su Aruba ──────────────────────────────────────────
-      # IMPORTANTE: Aggiungi questi segreti nelle impostazioni del repository:
-      #   Settings → Secrets and variables → Actions → New repository secret
-      #   • FTP_SERVER   → hostname FTP Aruba (es. ftp.tecnora.it)
-      #   • FTP_USERNAME → username FTP Aruba
-      #   • FTP_PASSWORD → password FTP Aruba
-      #   • FTP_PATH     → percorso remoto (es. /public_html/wp-content/themes/tecnora/)
       - name: 📤 Deploy tema su Aruba via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:

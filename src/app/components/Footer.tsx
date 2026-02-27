@@ -10,10 +10,10 @@ export function Footer() {
   ];
 
   const services = [
-    { name: 'BIM Methodology', path: '/innovazione' },
-    { name: 'Sistemi GIS', path: '/innovazione' },
-    { name: 'Data Analytics', path: '/innovazione' },
-    { name: 'Compliance', path: '/contatti' },
+    { name: 'Gare d\'Appalto', path: '/gare-appalto' },
+    { name: 'Sicurezza sul Lavoro', path: '/sicurezza' },
+    { name: 'Ambiente e Sostenibilità', path: '/ambiente' },
+    { name: 'Innovazione', path: '/innovazione' },
   ];
 
   return (
@@ -74,23 +74,23 @@ export function Footer() {
                 <span>Via Francesco Caracciolo n. 10<br />80122 Napoli</span>
               </li>
               <li className="flex items-center space-x-2">
-                <Phone size={16} aria-hidden="true" />
+                <Mail size={16} aria-hidden="true" />
                 <a
-                  href="tel:+39081XXXXXXX"
+                  href="mailto:contact@tecnora.it"
                   className="hover:text-secondary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-secondary rounded-sm"
-                  aria-label="Chiama TECNORA al +39 081 XXX XXXX"
+                  aria-label="Invia email a contact@tecnora.it"
                 >
-                  +39 081 XXX XXXX
+                  contact@tecnora.it
                 </a>
               </li>
               <li className="flex items-center space-x-2">
                 <Mail size={16} aria-hidden="true" />
                 <a
-                  href="mailto:info@tecnora.it"
+                  href="mailto:tecnora@pec.it"
                   className="hover:text-secondary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-secondary rounded-sm"
-                  aria-label="Invia email a info@tecnora.it"
+                  aria-label="PEC: tecnora@pec.it"
                 >
-                  info@tecnora.it
+                  <span className="text-xs text-gray-400 mr-1">PEC</span>tecnora@pec.it
                 </a>
               </li>
             </ul>
@@ -100,7 +100,7 @@ export function Footer() {
         <div className="border-t border-gray-600 mt-8 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
             <p>
-              <span className="font-medium">TECNORA S.R.L.</span> | P.IVA / C.F.: 10920591210
+              <span className="font-medium">Tecnora S.r.l.</span> | P.IVA / C.F.: 10920591210 | REA NA - 1141646
             </p>
             <p className="mt-2 md:mt-0">
               <small>© {new Date().getFullYear()} Tutti i diritti riservati</small>

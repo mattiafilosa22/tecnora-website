@@ -6,23 +6,23 @@ export function OperePubbliche() {
   const sectors = [
     {
       icon: Building,
-      title: 'Costruzioni Civili',
-      description: 'Progettazione di edifici pubblici, scuole, ospedali e strutture amministrative',
+      title: 'Infrastrutture Civili',
+      description: 'Supporto tecnico per la partecipazione a gare di progettazione e realizzazione di infrastrutture civili',
     },
     {
       icon: Home,
       title: 'Edilizia Pubblica',
-      description: 'Riqualificazione urbana, housing sociale e rigenerazione territoriale',
+      description: 'Consulenza per opere di edilizia pubblica: scuole, ospedali, strutture amministrative e interventi di riqualificazione',
     },
     {
       icon: Lightbulb,
-      title: 'Infrastrutture',
-      description: 'Opere viarie, ponti, reti idriche e mobilità sostenibile',
+      title: 'Riqualificazione Urbana',
+      description: 'Supporto tecnico per interventi di rigenerazione urbana, housing sociale e valorizzazione del territorio',
     },
     {
       icon: Camera,
-      title: 'Impiantistica Complessa',
-      description: 'Sistemi MEP, efficienza energetica e smart building',
+      title: 'Manutenzione e Adeguamento',
+      description: 'Assistenza nella gestione tecnica degli interventi di manutenzione e adeguamento normativo degli edifici pubblici',
     },
   ];
 
@@ -73,10 +73,10 @@ export function OperePubbliche() {
             transition={{ duration: 0.8 }}
           >
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
-              Opere e Lavori Pubblici
+              Ingegneria e supporto tecnico per le opere pubbliche
             </h1>
             <p className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto">
-              Progettazione integrata e direzione lavori per infrastrutture pubbliche
+              Consulenza specialistica per le imprese nel settore delle opere pubbliche
             </p>
           </motion.div>
         </div>
@@ -87,10 +87,10 @@ export function OperePubbliche() {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
-              Settori di Intervento
+              Ambiti di Intervento
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Competenze trasversali per ogni tipologia di opera pubblica
+              Tecnora opera nel settore delle opere pubbliche fornendo consulenza e supporto tecnico alle imprese
             </p>
           </div>
 

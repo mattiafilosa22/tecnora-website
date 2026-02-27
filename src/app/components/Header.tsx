@@ -12,8 +12,11 @@ export function Header() {
   const navItems = [
     { name: 'Home', path: '/' },
     { name: 'Chi Siamo', path: '/chi-siamo' },
+    { name: 'Gare d\'Appalto', path: '/gare-appalto' },
     { name: 'Opere Pubbliche', path: '/opere-pubbliche' },
     { name: 'Facility Management', path: '/facility-management' },
+    { name: 'Sicurezza', path: '/sicurezza' },
+    { name: 'Ambiente', path: '/ambiente' },
     { name: 'Innovazione', path: '/innovazione' },
     { name: 'Contatti', path: '/contatti' },
   ];

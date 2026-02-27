@@ -484,7 +484,7 @@ function tecnora_register_acf_fields(): void {
                 'label'         => 'Indirizzo Sede Legale',
                 'name'          => 'contact_address',
                 'type'          => 'text',
-                'default_value' => 'Via Francesco Caracciolo n. 10, 80122 Napoli',
+                'default_value' => 'Via Francesco Caracciolo n. 10 - 80122 Napoli',
             ],
             [
                 'key'           => 'field_contact_phone',
@@ -498,7 +498,7 @@ function tecnora_register_acf_fields(): void {
                 'label'         => 'Email',
                 'name'          => 'contact_email',
                 'type'          => 'email',
-                'default_value' => 'info@tecnora.it',
+                'default_value' => 'contact@tecnora.it',
             ],
             [
                 'key'           => 'field_contact_piva',
@@ -545,7 +545,7 @@ function tecnora_register_acf_fields(): void {
                 'label'         => 'Ragione Sociale',
                 'name'          => 'company_name',
                 'type'          => 'text',
-                'default_value' => 'TECNORA S.R.L.',
+                'default_value' => 'Tecnora S.r.l.',
             ],
             [
                 'key'           => 'field_company_reg',
@@ -559,7 +559,14 @@ function tecnora_register_acf_fields(): void {
                 'label'         => 'Numero REA',
                 'name'          => 'company_rea',
                 'type'          => 'text',
-                'default_value' => 'NA-XXXXXXX',
+                'default_value' => 'NA - 1141646',
+            ],
+            [
+                'key'           => 'field_company_pec',
+                'label'         => 'PEC',
+                'name'          => 'company_pec',
+                'type'          => 'email',
+                'default_value' => 'tecnora@pec.it',
             ],
             [
                 'key'           => 'field_company_capital',
@@ -653,3 +660,166 @@ function tecnora_register_acf_fields(): void {
     ] );
 
 } // fine tecnora_register_acf_fields()
+
+// ════════════════════════════════════════════════════════════════════════════════
+// GRUPPO 7: GARE D'APPALTO
+// ════════════════════════════════════════════════════════════════════════════════
+add_action( 'acf/init', function() {
+    acf_add_local_field_group( [
+        'key'    => 'group_tecnora_gare',
+        'title'  => "Gare d'Appalto – Contenuti",
+        'fields' => [
+
+            // ── Hero ──────────────────────────────────────────────────────────
+            [ 'key' => 'field_ga_tab1', 'label' => 'Hero', 'type' => 'tab' ],
+            [ 'key' => 'field_ga_hero_title',    'label' => 'Titolo Hero',     'name' => 'ga_hero_title',    'type' => 'text',  'default_value' => "Supporto alle Gare d'Appalto" ],
+            [ 'key' => 'field_ga_hero_subtitle', 'label' => 'Sottotitolo Hero','name' => 'ga_hero_subtitle', 'type' => 'text',  'default_value' => 'Il partner tecnico delle imprese per le procedure di gara pubblica' ],
+            [ 'key' => 'field_ga_hero_image',    'label' => 'Immagine Hero',   'name' => 'ga_hero_image',    'type' => 'image', 'return_format' => 'array', 'preview_size' => 'medium' ],
+
+            // ── Intro ─────────────────────────────────────────────────────────
+            [ 'key' => 'field_ga_tab2', 'label' => 'Introduzione', 'type' => 'tab' ],
+            [ 'key' => 'field_ga_intro_title', 'label' => 'Titolo Intro', 'name' => 'ga_intro_title', 'type' => 'text', 'default_value' => "Supporto tecnico alle imprese per le gare d'appalto pubbliche" ],
+            [ 'key' => 'field_ga_intro_text',  'label' => 'Testo Intro',  'name' => 'ga_intro_text',  'type' => 'wysiwyg', 'media_upload' => 0, 'toolbar' => 'basic' ],
+
+            // ── Servizi (4 fissi) ─────────────────────────────────────────────
+            [ 'key' => 'field_ga_tab3', 'label' => 'Servizi', 'type' => 'tab' ],
+            [ 'key' => 'field_ga_services_title',    'label' => 'Titolo Sezione Servizi',    'name' => 'ga_services_title',    'type' => 'text', 'default_value' => 'I Nostri Servizi' ],
+            [ 'key' => 'field_ga_services_subtitle', 'label' => 'Sottotitolo Sezione Servizi','name' => 'ga_services_subtitle', 'type' => 'text', "default_value" => "Dalla lettura del bando all'aggiudicazione" ],
+            // Servizio 1
+            [ 'key' => 'field_ga_s1_number', 'label' => 'N. Servizio 1', 'name' => 'ga_s1_number', 'type' => 'text', 'default_value' => '01' ],
+            [ 'key' => 'field_ga_s1_title',  'label' => 'Titolo Servizio 1', 'name' => 'ga_s1_title', 'type' => 'text', 'default_value' => 'Analisi della documentazione di gara' ],
+            [ 'key' => 'field_ga_s1_desc',   'label' => 'Desc. Servizio 1',  'name' => 'ga_s1_desc',  'type' => 'textarea', 'rows' => 3, 'default_value' => 'Verifica dei requisiti tecnici, analisi dei disciplinari, capitolati e documenti di gara, individuazione delle criticità e delle opportunità.' ],
+            // Servizio 2
+            [ 'key' => 'field_ga_s2_number', 'label' => 'N. Servizio 2', 'name' => 'ga_s2_number', 'type' => 'text', 'default_value' => '02' ],
+            [ 'key' => 'field_ga_s2_title',  'label' => 'Titolo Servizio 2', 'name' => 'ga_s2_title', 'type' => 'text', 'default_value' => "Supporto alla redazione dell'offerta tecnica" ],
+            [ 'key' => 'field_ga_s2_desc',   'label' => 'Desc. Servizio 2',  'name' => 'ga_s2_desc',  'type' => 'textarea', 'rows' => 3, 'default_value' => 'Affiancamento nella predisposizione degli elaborati tecnici, relazioni descrittive, metodologie operative, cronoprogrammi e migliorie.' ],
+            // Servizio 3
+            [ 'key' => 'field_ga_s3_number', 'label' => 'N. Servizio 3', 'name' => 'ga_s3_number', 'type' => 'text', 'default_value' => '03' ],
+            [ 'key' => 'field_ga_s3_title',  'label' => 'Titolo Servizio 3', 'name' => 'ga_s3_title', 'type' => 'text', 'default_value' => 'Verifica di conformità normativa' ],
+            [ 'key' => 'field_ga_s3_desc',   'label' => 'Desc. Servizio 3',  'name' => 'ga_s3_desc',  'type' => 'textarea', 'rows' => 3, 'default_value' => "Controllo della coerenza dell'offerta rispetto al Codice dei Contratti Pubblici, alle norme tecniche e alle prescrizioni della stazione appaltante." ],
+            // Servizio 4
+            [ 'key' => 'field_ga_s4_number', 'label' => 'N. Servizio 4', 'name' => 'ga_s4_number', 'type' => 'text', 'default_value' => '04' ],
+            [ 'key' => 'field_ga_s4_title',  'label' => 'Titolo Servizio 4', 'name' => 'ga_s4_title', 'type' => 'text', 'default_value' => 'Assistenza tecnica in fase di esecuzione' ],
+            [ 'key' => 'field_ga_s4_desc',   'label' => 'Desc. Servizio 4',  'name' => 'ga_s4_desc',  'type' => 'textarea', 'rows' => 3, 'default_value' => "Supporto successivo all'aggiudicazione per l'avvio e la gestione tecnica dell'appalto." ],
+
+            // ── CTA & SEO ─────────────────────────────────────────────────────
+            [ 'key' => 'field_ga_tab4', 'label' => 'CTA & SEO', 'type' => 'tab' ],
+            [ 'key' => 'field_ga_cta_title', 'label' => 'Titolo CTA', 'name' => 'ga_cta_title', 'type' => 'text', 'default_value' => "Stai partecipando a una gara d'appalto?" ],
+            [ 'key' => 'field_ga_cta_text',  'label' => 'Testo CTA',  'name' => 'ga_cta_text',  'type' => 'text', 'default_value' => "Contattaci per un'analisi preliminare della documentazione di gara." ],
+            [ 'key' => 'field_ga_seo_title', 'label' => 'SEO – Meta Title',       'name' => 'seo_title',       'type' => 'text' ],
+            [ 'key' => 'field_ga_seo_desc',  'label' => 'SEO – Meta Description', 'name' => 'seo_description', 'type' => 'textarea', 'rows' => 2 ],
+        ],
+        'location' => [
+            [
+                [ 'param' => 'post_type', 'operator' => '==', 'value' => 'page' ],
+                [ 'param' => 'page',      'operator' => '==', 'value' => tecnora_get_page_id_by_slug( 'gare-appalto' ) ],
+            ],
+        ],
+    ] );
+} );
+
+// ════════════════════════════════════════════════════════════════════════════════
+// GRUPPO 8: SICUREZZA SUL LAVORO
+// ════════════════════════════════════════════════════════════════════════════════
+add_action( 'acf/init', function() {
+    acf_add_local_field_group( [
+        'key'    => 'group_tecnora_sicurezza',
+        'title'  => 'Sicurezza sul Lavoro – Contenuti',
+        'fields' => [
+
+            // ── Hero ──────────────────────────────────────────────────────────
+            [ 'key' => 'field_sic_tab1', 'label' => 'Hero', 'type' => 'tab' ],
+            [ 'key' => 'field_sic_hero_title',    'label' => 'Titolo Hero',     'name' => 'sic_hero_title',    'type' => 'text',  'default_value' => 'Sicurezza sul Lavoro e Cantieri' ],
+            [ 'key' => 'field_sic_hero_subtitle', 'label' => 'Sottotitolo Hero','name' => 'sic_hero_subtitle', 'type' => 'text',  'default_value' => 'Supporto specialistico per la sicurezza negli appalti pubblici' ],
+            [ 'key' => 'field_sic_hero_image',    'label' => 'Immagine Hero',   'name' => 'sic_hero_image',    'type' => 'image', 'return_format' => 'array', 'preview_size' => 'medium' ],
+
+            // ── Testo principale ──────────────────────────────────────────────
+            [ 'key' => 'field_sic_tab2', 'label' => 'Testo Principale', 'type' => 'tab' ],
+            [ 'key' => 'field_sic_main_title', 'label' => 'Titolo Principale', 'name' => 'sic_main_title', 'type' => 'text', 'default_value' => 'La sicurezza è un elemento centrale negli appalti pubblici' ],
+            [ 'key' => 'field_sic_main_text',  'label' => 'Testo Principale',  'name' => 'sic_main_text',  'type' => 'wysiwyg', 'media_upload' => 0, 'toolbar' => 'basic' ],
+
+            // ── Card Servizi (4 fissi) ────────────────────────────────────────
+            [ 'key' => 'field_sic_tab3', 'label' => 'Servizi', 'type' => 'tab' ],
+            [ 'key' => 'field_sic_services_title',    'label' => 'Titolo Sezione', 'name' => 'sic_services_title',    'type' => 'text', 'default_value' => 'I Nostri Servizi' ],
+            [ 'key' => 'field_sic_services_subtitle', 'label' => 'Sottotitolo',    'name' => 'sic_services_subtitle', 'type' => 'text', 'default_value' => 'Supporto completo per la sicurezza in cantiere e nelle procedure di gara' ],
+            [ 'key' => 'field_sic_c1_title', 'label' => 'Card 1 – Titolo', 'name' => 'sic_c1_title', 'type' => 'text', 'default_value' => 'PSC e POS' ],
+            [ 'key' => 'field_sic_c1_desc',  'label' => 'Card 1 – Desc.',  'name' => 'sic_c1_desc',  'type' => 'textarea', 'rows' => 2, 'default_value' => 'Piani di Sicurezza e Coordinamento e Piani Operativi di Sicurezza redatti da professionisti qualificati.' ],
+            [ 'key' => 'field_sic_c2_title', 'label' => 'Card 2 – Titolo', 'name' => 'sic_c2_title', 'type' => 'text', 'default_value' => 'Coordinamento' ],
+            [ 'key' => 'field_sic_c2_desc',  'label' => 'Card 2 – Desc.',  'name' => 'sic_c2_desc',  'type' => 'textarea', 'rows' => 2, 'default_value' => 'Supporto al Coordinatore per la Sicurezza in fase di progettazione ed esecuzione dei lavori.' ],
+            [ 'key' => 'field_sic_c3_title', 'label' => 'Card 3 – Titolo', 'name' => 'sic_c3_title', 'type' => 'text', 'default_value' => 'Conformità normativa' ],
+            [ 'key' => 'field_sic_c3_desc',  'label' => 'Card 3 – Desc.',  'name' => 'sic_c3_desc',  'type' => 'textarea', 'rows' => 2, 'default_value' => 'Verifica sistematica della conformità al D.Lgs. 81/2008 e alle normative tecniche di cantiere.' ],
+            [ 'key' => 'field_sic_c4_title', 'label' => 'Card 4 – Titolo', 'name' => 'sic_c4_title', 'type' => 'text', 'default_value' => 'Assistenza in gara' ],
+            [ 'key' => 'field_sic_c4_desc',  'label' => 'Card 4 – Desc.',  'name' => 'sic_c4_desc',  'type' => 'textarea', 'rows' => 2, 'default_value' => 'Affiancamento nella predisposizione dei documenti di sicurezza richiesti nelle procedure di gara.' ],
+
+            // ── Lista & CTA & SEO ─────────────────────────────────────────────
+            [ 'key' => 'field_sic_tab4', 'label' => 'Lista & CTA & SEO', 'type' => 'tab' ],
+            [ 'key' => 'field_sic_list_title', 'label' => 'Titolo Lista', 'name' => 'sic_list_title', 'type' => 'text', 'default_value' => 'In sintesi' ],
+            [ 'key' => 'field_sic_l1', 'label' => 'Voce Lista 1', 'name' => 'sic_l1', 'type' => 'text', 'default_value' => 'Redazione di PSC, POS e documentazione di sicurezza' ],
+            [ 'key' => 'field_sic_l2', 'label' => 'Voce Lista 2', 'name' => 'sic_l2', 'type' => 'text', 'default_value' => 'Supporto al Coordinatore per la Sicurezza' ],
+            [ 'key' => 'field_sic_l3', 'label' => 'Voce Lista 3', 'name' => 'sic_l3', 'type' => 'text', 'default_value' => 'Verifica della conformità normativa' ],
+            [ 'key' => 'field_sic_l4', 'label' => 'Voce Lista 4', 'name' => 'sic_l4', 'type' => 'text', 'default_value' => 'Assistenza durante le fasi di gara ed esecuzione' ],
+            [ 'key' => 'field_sic_cta_title', 'label' => 'Titolo CTA', 'name' => 'sic_cta_title', 'type' => 'text', 'default_value' => 'Hai bisogno di supporto per la sicurezza in cantiere?' ],
+            [ 'key' => 'field_sic_seo_title', 'label' => 'SEO – Meta Title',       'name' => 'seo_title',       'type' => 'text' ],
+            [ 'key' => 'field_sic_seo_desc',  'label' => 'SEO – Meta Description', 'name' => 'seo_description', 'type' => 'textarea', 'rows' => 2 ],
+        ],
+        'location' => [
+            [
+                [ 'param' => 'post_type', 'operator' => '==', 'value' => 'page' ],
+                [ 'param' => 'page',      'operator' => '==', 'value' => tecnora_get_page_id_by_slug( 'sicurezza' ) ],
+            ],
+        ],
+    ] );
+} );
+
+// ════════════════════════════════════════════════════════════════════════════════
+// GRUPPO 9: AMBIENTE E SOSTENIBILITÀ
+// ════════════════════════════════════════════════════════════════════════════════
+add_action( 'acf/init', function() {
+    acf_add_local_field_group( [
+        'key'    => 'group_tecnora_ambiente',
+        'title'  => 'Ambiente e Sostenibilità – Contenuti',
+        'fields' => [
+
+            // ── Hero ──────────────────────────────────────────────────────────
+            [ 'key' => 'field_amb_tab1', 'label' => 'Hero', 'type' => 'tab' ],
+            [ 'key' => 'field_amb_hero_title',    'label' => 'Titolo Hero',     'name' => 'amb_hero_title',    'type' => 'text',  'default_value' => 'Ambiente e Sostenibilità' ],
+            [ 'key' => 'field_amb_hero_subtitle', 'label' => 'Sottotitolo Hero','name' => 'amb_hero_subtitle', 'type' => 'text',  'default_value' => 'Conformità normativa ambientale e sostenibilità negli appalti pubblici' ],
+            [ 'key' => 'field_amb_hero_image',    'label' => 'Immagine Hero',   'name' => 'amb_hero_image',    'type' => 'image', 'return_format' => 'array', 'preview_size' => 'medium' ],
+
+            // ── Testo principale ──────────────────────────────────────────────
+            [ 'key' => 'field_amb_tab2', 'label' => 'Testo Principale', 'type' => 'tab' ],
+            [ 'key' => 'field_amb_main_title', 'label' => 'Titolo Principale', 'name' => 'amb_main_title', 'type' => 'text', 'default_value' => 'Ambiente, sostenibilità e conformità normativa' ],
+            [ 'key' => 'field_amb_main_text',  'label' => 'Testo Principale',  'name' => 'amb_main_text',  'type' => 'wysiwyg', 'media_upload' => 0, 'toolbar' => 'basic' ],
+
+            // ── Card Servizi (4 fissi) ────────────────────────────────────────
+            [ 'key' => 'field_amb_tab3', 'label' => 'Servizi', 'type' => 'tab' ],
+            [ 'key' => 'field_amb_services_title',    'label' => 'Titolo Sezione', 'name' => 'amb_services_title',    'type' => 'text', 'default_value' => 'I Nostri Servizi' ],
+            [ 'key' => 'field_amb_services_subtitle', 'label' => 'Sottotitolo',    'name' => 'amb_services_subtitle', 'type' => 'text', "default_value" => "Dall'analisi preliminare alla gestione operativa degli adempimenti" ],
+            [ 'key' => 'field_amb_c1_title', 'label' => 'Card 1 – Titolo', 'name' => 'amb_c1_title', 'type' => 'text', 'default_value' => 'Autorizzazioni' ],
+            [ 'key' => 'field_amb_c1_desc',  'label' => 'Card 1 – Desc.',  'name' => 'amb_c1_desc',  'type' => 'textarea', 'rows' => 2, "default_value" => "Supporto per l'ottenimento delle autorizzazioni ambientali necessarie per le opere pubbliche." ],
+            [ 'key' => 'field_amb_c2_title', 'label' => 'Card 2 – Titolo', 'name' => 'amb_c2_title', 'type' => 'text', 'default_value' => 'Rifiuti di cantiere' ],
+            [ 'key' => 'field_amb_c2_desc',  'label' => 'Card 2 – Desc.',  'name' => 'amb_c2_desc',  'type' => 'textarea', 'rows' => 2, 'default_value' => 'Gestione documentale e operativa dei rifiuti prodotti nelle attività di cantiere.' ],
+            [ 'key' => 'field_amb_c3_title', 'label' => 'Card 3 – Titolo', 'name' => 'amb_c3_title', 'type' => 'text', 'default_value' => 'CAM – Criteri Ambientali Minimi' ],
+            [ 'key' => 'field_amb_c3_desc',  'label' => 'Card 3 – Desc.',  'name' => 'amb_c3_desc',  'type' => 'textarea', 'rows' => 2, 'default_value' => 'Verifica e applicazione dei CAM obbligatori negli appalti pubblici (D.M. Ambiente).' ],
+            [ 'key' => 'field_amb_c4_title', 'label' => 'Card 4 – Titolo', 'name' => 'amb_c4_title', 'type' => 'text', 'default_value' => 'Valutazioni ambientali' ],
+            [ 'key' => 'field_amb_c4_desc',  'label' => 'Card 4 – Desc.',  'name' => 'amb_c4_desc',  'type' => 'textarea', 'rows' => 2, "default_value" => "Analisi preliminari dell'impatto ambientale nelle fasi di gara e progettazione." ],
+
+            // ── Lista & CTA & SEO ─────────────────────────────────────────────
+            [ 'key' => 'field_amb_tab4', 'label' => 'Lista & CTA & SEO', 'type' => 'tab' ],
+            [ 'key' => 'field_amb_list_title', 'label' => 'Titolo Lista', 'name' => 'amb_list_title', 'type' => 'text', 'default_value' => 'In sintesi' ],
+            [ 'key' => 'field_amb_l1', 'label' => 'Voce Lista 1', 'name' => 'amb_l1', 'type' => 'text', 'default_value' => 'Supporto per autorizzazioni e adempimenti ambientali' ],
+            [ 'key' => 'field_amb_l2', 'label' => 'Voce Lista 2', 'name' => 'amb_l2', 'type' => 'text', 'default_value' => 'Gestione dei rifiuti di cantiere' ],
+            [ 'key' => 'field_amb_l3', 'label' => 'Voce Lista 3', 'name' => 'amb_l3', 'type' => 'text', 'default_value' => 'Valutazioni ambientali preliminari' ],
+            [ 'key' => 'field_amb_l4', 'label' => 'Voce Lista 4', 'name' => 'amb_l4', 'type' => 'text', 'default_value' => 'Supporto per criteri ambientali minimi (CAM)' ],
+            [ 'key' => 'field_amb_cta_title', 'label' => 'Titolo CTA', 'name' => 'amb_cta_title', 'type' => 'text', 'default_value' => 'Hai bisogno di supporto per gli aspetti ambientali di un appalto?' ],
+            [ 'key' => 'field_amb_seo_title', 'label' => 'SEO – Meta Title',       'name' => 'seo_title',       'type' => 'text' ],
+            [ 'key' => 'field_amb_seo_desc',  'label' => 'SEO – Meta Description', 'name' => 'seo_description', 'type' => 'textarea', 'rows' => 2 ],
+        ],
+        'location' => [
+            [
+                [ 'param' => 'post_type', 'operator' => '==', 'value' => 'page' ],
+                [ 'param' => 'page',      'operator' => '==', 'value' => tecnora_get_page_id_by_slug( 'ambiente' ) ],
+            ],
+        ],
+    ] );
+} );

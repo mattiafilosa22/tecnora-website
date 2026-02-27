@@ -75,13 +75,16 @@ function tecnora_localize_wp_data(): void {
     // ── Mappa slug WP → route React ───────────────────────────────────────────
     // WP usa slug come "chi-siamo", React usa path "/chi-siamo"
     $route_map = [
-        ''                   => '/',
-        'home'               => '/',
-        'chi-siamo'          => '/chi-siamo',
-        'opere-pubbliche'    => '/opere-pubbliche',
-        'facility-management'=> '/facility-management',
-        'innovazione'        => '/innovazione',
-        'contatti'           => '/contatti',
+        ''                    => '/',
+        'home'                => '/',
+        'chi-siamo'           => '/chi-siamo',
+        'gare-appalto'        => '/gare-appalto',
+        'opere-pubbliche'     => '/opere-pubbliche',
+        'facility-management' => '/facility-management',
+        'sicurezza'           => '/sicurezza',
+        'ambiente'            => '/ambiente',
+        'innovazione'         => '/innovazione',
+        'contatti'            => '/contatti',
     ];
 
     $current_route = $route_map[ $page_slug ] ?? '/' . ltrim( $page_slug, '/' );

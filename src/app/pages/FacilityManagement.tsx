@@ -76,10 +76,10 @@ export function FacilityManagement() {
             transition={{ duration: 0.8 }}
           >
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
-              Facility Management
+              Facility Management e supporto tecnico-operativo
             </h1>
             <p className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto">
-              Gestione asset e supporto appalti per la Pubblica Amministrazione
+              Pianificazione, organizzazione e controllo delle attività di facility management
             </p>
           </motion.div>
         </div>
@@ -90,10 +90,10 @@ export function FacilityManagement() {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
-              Gestione Asset
+              Gestione Intelligente degli Asset
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Soluzioni integrate per la manutenzione del patrimonio pubblico
+              Offriamo servizi di supporto tecnico per la gestione e manutenzione di edifici, impianti e infrastrutture, con particolare attenzione agli appalti pubblici
             </p>
           </div>
 

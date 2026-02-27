@@ -79,10 +79,10 @@ export function Innovazione() {
             transition={{ duration: 0.8 }}
           >
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
-              Innovazione Digitale
+              Innovazione al servizio dei processi tecnici
             </h1>
             <p className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto">
-              Il Cuore Tecnologico dei Nostri Progetti
+              Digitalizzazione e ottimizzazione per le gare e gli appalti pubblici
             </p>
           </motion.div>
         </div>
@@ -93,10 +93,10 @@ export function Innovazione() {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
-              Metodologie e Tecnologie
+              Metodologie e Strumenti
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Strumenti digitali per decisioni basate sui dati
+              Crediamo nell'innovazione come strumento di miglioramento continuo dei processi tecnici legati alle gare e agli appalti pubblici
             </p>
           </div>
 

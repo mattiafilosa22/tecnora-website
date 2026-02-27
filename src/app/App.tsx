@@ -2,8 +2,11 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { Home } from './pages/Home';
 import { ChiSiamo } from './pages/ChiSiamo';
+import { GareAppalto } from './pages/GareAppalto';
 import { OperePubbliche } from './pages/OperePubbliche';
 import { FacilityManagement } from './pages/FacilityManagement';
+import { Sicurezza } from './pages/Sicurezza';
+import { Ambiente } from './pages/Ambiente';
 import { Innovazione } from './pages/Innovazione';
 import { Contatti } from './pages/Contatti';
 
@@ -20,8 +23,11 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/chi-siamo" element={<ChiSiamo />} />
+          <Route path="/gare-appalto" element={<GareAppalto />} />
           <Route path="/opere-pubbliche" element={<OperePubbliche />} />
           <Route path="/facility-management" element={<FacilityManagement />} />
+          <Route path="/sicurezza" element={<Sicurezza />} />
+          <Route path="/ambiente" element={<Ambiente />} />
           <Route path="/innovazione" element={<Innovazione />} />
           <Route path="/contatti" element={<Contatti />} />
           {/* Reindirizza il route WP corrente se diverso dal path attuale */}
@@ -33,4 +39,3 @@ export default function App() {
     </BrowserRouter>
   );
 }
-
