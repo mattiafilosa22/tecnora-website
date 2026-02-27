@@ -1,6 +1,6 @@
 {
   "index.html": {
-    "file": "assets/main-BvQARVVH.js",
+    "file": "assets/main-GBSDR3-v.js",
     "name": "main",
     "src": "index.html",
     "isEntry": true,
@@ -8,11 +8,11 @@
       "assets/main-DYb_Eh1O.css"
     ],
     "assets": [
-      "assets/logo-CLjSWCTc.jpeg"
+      "assets/Logo_Tecnora-pjRShlaE.png"
     ]
   },
-  "src/assets/logo.jpeg": {
-    "file": "assets/logo-CLjSWCTc.jpeg",
-    "src": "src/assets/logo.jpeg"
+  "src/assets/Logo_Tecnora.png": {
+    "file": "assets/Logo_Tecnora-pjRShlaE.png",
+    "src": "src/assets/Logo_Tecnora.png"
   }
 }

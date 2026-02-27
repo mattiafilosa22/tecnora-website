@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { Menu, X } from 'lucide-react';
 import { useState, useRef, useEffect, useCallback } from 'react';
-import logo from '../../assets/logo.jpeg';
+import logo from '../../assets/Logo_Tecnora.png';
 
 export function Header() {
   const location = useLocation();
@@ -81,7 +81,7 @@ export function Header() {
                 src={logo} 
                 alt="Tecnora Logo" 
                 className="h-12 w-auto" 
-                style={{ height: '48px', width: 'auto', objectFit: 'contain', maxWidth: '250px' }} 
+                style={{ height: '75px', width: 'auto', objectFit: 'contain', maxWidth: '250px' }} 
               />
             </motion.div>
           </Link>
