@@ -1,11 +1,18 @@
 {
   "index.html": {
-    "file": "assets/main-DqqWzI-o.js",
+    "file": "assets/main-ToU2Cmer.js",
     "name": "main",
     "src": "index.html",
     "isEntry": true,
     "css": [
       "assets/main-hjwSeBuf.css"
+    ],
+    "assets": [
+      "assets/logo-CLjSWCTc.jpeg"
     ]
+  },
+  "src/assets/logo.jpeg": {
+    "file": "assets/logo-CLjSWCTc.jpeg",
+    "src": "src/assets/logo.jpeg"
   }
 }

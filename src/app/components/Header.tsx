@@ -2,6 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { Menu, X } from 'lucide-react';
 import { useState, useRef, useEffect, useCallback } from 'react';
+import logo from '../../assets/logo.jpeg';
 
 export function Header() {
   const location = useLocation();
@@ -12,7 +13,7 @@ export function Header() {
   const navItems = [
     { name: 'Home', path: '/' },
     { name: 'Chi Siamo', path: '/chi-siamo' },
-    { name: 'Gare d\'Appalto', path: '/gare-appalto' },
+    { name: "Gare d'Appalto", path: '/gare-appalto' },
     { name: 'Opere Pubbliche', path: '/opere-pubbliche' },
     { name: 'Facility Management', path: '/facility-management' },
     { name: 'Sicurezza', path: '/sicurezza' },
@@ -76,7 +77,12 @@ export function Header() {
               whileHover={{ scale: 1.05 }}
               className="flex items-center"
             >
-              <span className="text-3xl font-bold text-primary" aria-hidden="true">TECNORA</span>
+              <img 
+                src={logo} 
+                alt="Tecnora Logo" 
+                className="h-12 w-auto" 
+                style={{ height: '48px', width: 'auto', objectFit: 'contain', maxWidth: '250px' }} 
+              />
             </motion.div>
           </Link>
 

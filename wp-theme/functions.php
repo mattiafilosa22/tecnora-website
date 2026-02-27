@@ -76,7 +76,7 @@ function tecnora_enqueue_assets() {
             TECNORA_DIST_URI . '/' . $js_file,
             [],
             null,
-            [ 'in_footer' => true, 'strategy' => 'defer' ]
+            [ 'in_footer' => true ]
         );
     }
 
@@ -120,3 +120,16 @@ if ( function_exists( 'acf_add_local_field_group' ) ) {
 // ─── Rimuovi emoji WordPress (performance) ────────────────────────────────────
 remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
 remove_action( 'wp_print_styles', 'print_emoji_styles' );
+
+// ─── Aggiungi type="module" al bundle Vite ────────────────────────────────────
+// I bundle generati da Vite usano import.meta e la sintassi ES module,
+// che richiedono type="module" nel tag <script>.
+add_filter( 'script_loader_tag', 'tecnora_add_module_type', 10, 3 );
+function tecnora_add_module_type( $tag, $handle, $src ) {
+    if ( 'tecnora-app' !== $handle ) {
+        return $tag;
+    }
+    // Sostituisce il tag <script con <script type="module"
+    return str_replace( '<script ', '<script type="module" ', $tag );
+}
+
